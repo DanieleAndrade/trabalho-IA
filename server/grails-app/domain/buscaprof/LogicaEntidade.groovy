@@ -18,8 +18,6 @@ class LogicaEntidade {
         Stack<No> abertos = new Stack<>()
 
         abertos.add(noRaiz)
-
-        buscaController.printNo(noRaiz.estado)
         nosFinais.add(noRaiz.estado)
 
         while (!abertos.isEmpty()) {
@@ -44,7 +42,6 @@ class LogicaEntidade {
                     noFilho.noPai = x
                     abertos.add(noFilho)
                     nosFinais.add(noFilho.estado)
-                    buscaController.printNo(noFilho.estado)
                 }
             }
         }

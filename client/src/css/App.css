@@ -51,6 +51,11 @@ ol, ul {
   margin-bottom: 10px;
 }
 
+.tabuleiro {
+  margin-left: 30%;
+  margin-top: 20px;
+}
+
 .square {
   background: #fff;
   border: 1px solid #999;
@@ -83,3 +88,7 @@ ol, ul {
   margin-left: 20px;
 }
 
+.button {
+  margin-right: 10px;
+  margin-left: 10px;
+}

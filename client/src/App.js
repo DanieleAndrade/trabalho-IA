@@ -9,26 +9,30 @@ import 'whatwg-fetch';
 
 class App extends Component {
 
+//Objetos e variáveis utilizada no projeto
     constructor(props) {
         super(props);
         this.state = {
             nos: [],
-            ddf: "fgf",
             estado: "",
-            objetivo: ""
+            objetivo: "",
+            resultado: ""
         }
+        
+        //Permitindo acesso ao this ao chamar o método
         this.buscaAmplitude=this.buscaAmplitude.bind(this);
         this.buscaProfundidade=this.buscaProfundidade.bind(this);
     }
 
+    //Pegar valor de inputs a cada digito
     handleChangeEstado = (event) => {
-        console.log(this.state);
         this.setState({estado: event.target.value});
     }
 
     handleChangeObjetivo = (event) => {
         this.setState({objetivo: event.target.value});
     }
+
 
     buscaProfundidade() {
         fetch(SERVER_URL + '/chamaBusca/buscando/item?objetivo='  +this.state.objetivo+ '&estado=' +this.state.estado)
@@ -38,17 +42,16 @@ class App extends Component {
             .catch(error => console.error('Error connecting to server: ' + error));
 
     }
-
+    //Chamada para o servidor, passando os parametros objetivo e estado atual
     buscaAmplitude() {
         fetch(SERVER_URL + '/chamaBuscaAmplitude/buscando/item?objetivo=' +this.state.objetivo+ '&estado=' +this.state.estado)
             .then(r => r.json())
-            .then(json => {this.setState({nos: json.model.nosFinais});
+            .then(json => {this.setState({nos: json.model.nosFinais, resultado: json.retorno}); //Seta o retorno nas variaveis
             })
             .catch(error => console.error('Error connecting to server: ' + error));
     }
 
     render() {
-        console.log(this.state);
         return (
             <div>
                 <label>Informe o estado atual:
@@ -58,13 +61,15 @@ class App extends Component {
                 <label>Informe o objetivo:
                     <input type="text" name="objetivo" id="objetivo" maxlength="9" value={this.state.value} onChange={this.handleChangeObjetivo} /><br/>
                 </label>
+                <br/><br/>
+                {/* Chama o método*/}
+                <button className="button" onClick={this.buscaProfundidade}>Busca Profundidade</button>
+                <button className="button" onClick={this.buscaAmplitude}>Busca Amplitude</button>
 
-                <button onClick={this.buscaProfundidade}>DSF</button>
-                <button onClick={this.buscaAmplitude}>BFS</button>
-
+                {/* Percorre a lista de nós retornados e cria divs para cada nó separados em quadrados */}
                 {this.state.nos.map((no) => {
                     return (
-                        <div key={no}>
+                        <div className="tabuleiro" key={no}>
                             <div className="board-row">
                                 <p className="square">{no.substring(0,1)}</p>
                                 <p className="square">{no.substring(1,2)}</p>
@@ -87,7 +92,7 @@ class App extends Component {
                     )
                 })}
 
-                <p>Sucesso</p>
+               {this.state.resultado}
 
             </div>
 

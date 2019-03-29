@@ -2,20 +2,21 @@ package buscaAmplitude
 
 class BuscaAmplitudeController {
     def index() {
-//        String OBJETIVO = "1238X4765"
-//        String ESTADO_ATUAL = "1348627X5"
-
-        LogicaBuscaAmplitude item = new LogicaBuscaAmplitude(new No(params.estado), params.objetivo)
-        item.busca()
-
-        respond(model: item)
+        //Cria o objeto do tipo LogicaBusca passando os parametros, No com estado Atual e objetivo 
+        LogicaBuscaAmplitude item = new LogicaBuscaAmplitude(new No(params.estado.toLowerCase()), params.objetivo.toLowerCase())
+        //Chama o método busca da Logica
+        String mensagem = item.busca()
+        
+        respond(model: item, retorno: mensagem)
     }
 
-
+//Gerar filhos 
     List<String> gerarFilhos(String estadoAtual) {
+        //Lista vazia de filhos
         List<String> filhos = new ArrayList<>()
-        estadoAtual = estadoAtual.toLowerCase()
+        //Estado que foi enviado
         switch (estadoAtual.indexOf("x")) {
+            //Se o item X estiver na posição 0 
             case 0:
                 filhos.add(estadoAtual.replace(estadoAtual.charAt(0), '*' as char).replace(estadoAtual.charAt(1), estadoAtual.charAt(0)).replace('*' as char, estadoAtual.charAt(1)))
                 filhos.add(estadoAtual.replace(estadoAtual.charAt(0), '*' as char).replace(estadoAtual.charAt(3), estadoAtual.charAt(0)).replace('*' as char, estadoAtual.charAt(3)))
@@ -71,18 +72,5 @@ class BuscaAmplitudeController {
 
         }
         return filhos
-    }
-
-    void printNo(String no){
-        ArrayList<String> nos = new ArrayList<>()
-
-        System.out.println("###########################################################################################################")
-        nos.add(String.join("|", String.valueOf(no.charAt(0)), String.valueOf(no.charAt(1)), String.valueOf(no.charAt(2))))
-        nos.add(String.join("|", String.valueOf(no.charAt(3)), String.valueOf(no.charAt(4)), String.valueOf(no.charAt(5))))
-        nos.add(String.join("|", String.valueOf(no.charAt(6)), String.valueOf(no.charAt(7)), String.valueOf(no.charAt(8))))
-
-        nos.stream()?.each {
-            println(it)
-        }
     }
 }

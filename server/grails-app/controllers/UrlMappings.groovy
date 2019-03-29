@@ -1,5 +1,6 @@
 package buscaprof
 
+//Classe responsável pelos métodos http
 class UrlMappings {
 
     static mappings = {
@@ -12,7 +13,7 @@ class UrlMappings {
 
         "/"(controller: 'application', action:'index')
         "/chamaBusca/buscando/**"(controller: 'busca', action:'index')
-        "/chamaBuscaAmplitude/buscando/**"(controller: 'buscaAmplitude', action:'index')
+        "/chamaBuscaAmplitude/buscando/**"(controller: 'buscaAmplitude', action:'index') //Ao chegar uma requisição com a url informada é chamado o método do controller
         "500"(view: '/error')
         "404"(view: '/notFound')
     }

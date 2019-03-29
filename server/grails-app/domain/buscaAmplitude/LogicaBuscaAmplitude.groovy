@@ -11,51 +11,42 @@ class LogicaBuscaAmplitude {
     }
 
     String busca() {
+        //Cria instancia do controller, para acessar o gerarFilhos
         BuscaAmplitudeController buscaController = new BuscaAmplitudeController()
         No noRaiz = new No(no.estado)
-        int totalDeNosVisitados = 0
         Queue<String> fechados = new LinkedList<>()
         Queue<No> abertos = new LinkedList<>()
 
         abertos.add(noRaiz)
-
-        buscaController.printNo(noRaiz.estado)
+        fechados.removeAll(fechados)
         nosFinais.add(noRaiz.estado)
 
         while (!abertos.isEmpty()) {
-            totalDeNosVisitados++
+            //X é o item do aberto que está sendo verificado
             No x = abertos.remove()
 
             if (x.estado == objetivo) {
-                System.out.println("Sucesso")
-                System.out.println(totalDeNosVisitados)
                 nosFinais.add(x.estado)
-                break
+                return "Sucesso"
             } else {
+                //Cria uma lista de nós filhos
                 List<String> nosFilhos = buscaController.gerarFilhos(x.estado)
                 fechados.add(x.estado)
 
-                try {
-                    for (String filho : nosFilhos) {
-                        if (fechados.contains(filho) || abertos.contains(filho))
-                            continue
-                        fechados.add(filho)
-                        No noFilho = new No(filho)
-                        x.addFilhos(noFilho)
-                        noFilho.noPai = x
-                        abertos.add(noFilho)
-                        nosFinais.add(noFilho.estado)
-                        buscaController.printNo(noFilho.estado)
-                        String teste = "ads"
-                    }
-                    String helo = "avcd"
-                }catch (Exception e) {
-                    print(e)
-                }
+                for (String filho : nosFilhos) {
+                    if (fechados.contains(filho) || abertos.contains(filho))
+                        continue
+                    //fechados.add(filho)
+                    No noFilho = new No(filho)
+                    x.addFilhos(noFilho)
+                    noFilho.noPai = x
+                    abertos.add(noFilho)
+                    nosFinais.add(noFilho.estado)
 
+                }
             }
         }
 
-        return "0"
+        return "Falha"
     }
 }
