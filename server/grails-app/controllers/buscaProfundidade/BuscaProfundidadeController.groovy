@@ -2,13 +2,13 @@ package buscaprof
 
 import grails.rest.RestfulController
 
-class BuscaController {
+class BuscaProfundidadeController {
 
     def index() {
-        LogicaEntidade item = new LogicaEntidade(new No(params.estado.toLowerCase()), params.objetivo.toLowerCase())
-        item.busca()
+        LogicaBuscaProfundidade item = new LogicaBuscaProfundidade(new No(params.estado.toLowerCase()), params.objetivo.toLowerCase())
+        String mensagem = item.busca()
 
-        respond(model: item)
+        respond(model: item, retorno: mensagem)
     }
 
 

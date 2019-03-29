@@ -36,10 +36,9 @@ class LogicaBuscaAmplitude {
                 for (String filho : nosFilhos) {
                     if (fechados.contains(filho) || abertos.contains(filho))
                         continue
-                    //fechados.add(filho)
                     No noFilho = new No(filho)
                     x.addFilhos(noFilho)
-                    noFilho.noPai = x
+                    noFilho.noPai = x //novo nó filho apontar para o pai
                     abertos.add(noFilho)
                     nosFinais.add(noFilho.estado)
 

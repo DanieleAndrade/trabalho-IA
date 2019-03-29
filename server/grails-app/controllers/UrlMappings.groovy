@@ -12,8 +12,8 @@ class UrlMappings {
         patch "/$controller/$id(.$format)?"(action:"patch")
 
         "/"(controller: 'application', action:'index')
-        "/chamaBusca/buscando/**"(controller: 'busca', action:'index')
-        "/chamaBuscaAmplitude/buscando/**"(controller: 'buscaAmplitude', action:'index') //Ao chegar uma requisição com a url informada é chamado o método do controller
+        "/buscaProfundidade/buscando/**"(controller: 'buscaProfundidade', action:'index')
+        "/buscaAmplitude/buscando/**"(controller: 'buscaAmplitude', action:'index') //Ao chegar uma requisição com a url informada é chamado o método do controller
         "500"(view: '/error')
         "404"(view: '/notFound')
     }

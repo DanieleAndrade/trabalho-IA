@@ -10,7 +10,7 @@ class No {
         nosFilhos = new ArrayList<>()
     }
 
-    void addFilhos(No noFilho) {
+    void adicionaFilhos(No noFilho) {
         this.nosFilhos.add(noFilho)
     }
 

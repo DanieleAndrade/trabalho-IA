@@ -1,9 +1,9 @@
 package buscaprof
 
-class LogicaEntidade {
+class LogicaBuscaProfundidade {
     No no
     String objetivo
-    ArrayList<String> nosFinais = new ArrayList<>()
+    ArrayList<String> nosFinais = new ArrayList<>() //nós que serão enviados para a view
 
     LogicaEntidade(No no, String objetivo) {
         this.no = no
@@ -11,24 +11,20 @@ class LogicaEntidade {
     }
 
     String busca() {
-        BuscaController buscaController = new BuscaController()
+        BuscaProfundidadeController buscaController = new BuscaProfundidadeController()
         No noRaiz = new No(no.estado)
-        int totalDeNosVisitados = 0
         Stack<String> fechados = new Stack<>()
         Stack<No> abertos = new Stack<>()
 
         abertos.add(noRaiz)
-        nosFinais.add(noRaiz.estado)
+        nosFinais.add(noRaiz.estado) // mostra o nó com estado inicial
 
         while (!abertos.isEmpty()) {
-            totalDeNosVisitados++
             No x = abertos.pop()
 
             if (x.estado == objetivo) {
-                System.out.println("Sucesso")
-                System.out.println(totalDeNosVisitados)
-                nosFinais.add(x.estado)
-                break
+                nosFinais.add(x.estado) // mostra o nó com o estado objetivo
+                return "Sucesso"
             } else {
                 List<String> nosFilhos = buscaController.gerarFilhos(x.estado)
                 fechados.add(x.estado)
@@ -36,16 +32,15 @@ class LogicaEntidade {
                 for (String filho : nosFilhos) {
                     if (fechados.contains(filho) || abertos.contains(filho))
                         continue
-                    fechados.add(filho)
                     No noFilho = new No(filho)
-                    x.addFilhos(noFilho)
+                    x.adicionaFilhos(noFilho)
                     noFilho.noPai = x
                     abertos.add(noFilho)
-                    nosFinais.add(noFilho.estado)
+                    nosFinais.add(noFilho.estado) // mostra o nó filho com estado atual
                 }
             }
         }
 
-        return "0"
+        return "Falha"
     }
 }
